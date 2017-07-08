@@ -2,9 +2,26 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Howdy</title>
+    <title>To Do List</title>
+    <script src="/vendors/jquery.js" charset="utf-8"></script>
+    <script src="/scripts/client.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/view/style.css">
   </head>
   <body>
-    <h1>Howdy</h1>
+    <h1>To Do: List</h1>
+    <h3>Input a Task Here:</h3>
+    <div id="inputContainer">
+      <form id="newTaskForm">
+        <input type="text" id="newTaskDesc" placeholder="Describe new task here.">
+        <p>Where will you perform this task?</p>
+        <p><input type="radio" name="location" value="Home Office"/> Home Office</p>
+        <p><input type="radio" name="location" value="Kitchen"/> Kitchen</p>
+        <p><input type="radio" name="location" value="Bedroom"/> Bedroom</p>
+        <p><input type="radio" name="location" value="Coffee Shop"/> Coffee Shop</p>
+        <p><input type="radio" name="location" value="School"/> School</p>
+        <p><input type="radio" name="location" value="Errand"/> Errand</p>
+        <button type="submit" id="addTaskBtn">+</button>
+      </form>
+    </div>
   </body>
 </html>
