@@ -16,5 +16,5 @@
 - [x] Explore d3 visualization of the tasks to complete.
 - [x] Copy over previous force directed graph and display it on the DOM.
 - [x] Create function to convert database object to d3 object.
-- [ ] Refresh force directed graph when 'refreshTasks()' is called.
-- [ ] Refactor and comment code.
+- [x] Refresh force directed graph when 'refreshTasks()' is called.
+- [x] Refactor and comment code.
