@@ -23,8 +23,23 @@ $('document').ready(function(){
         refreshTasks();
       }
     });
+  });
 
+  $("#viewTasks").on('click', '.completeBtn', function(){
+    var thisTaskData = $(this).parent().parent().data().task;
+    console.log(thisTaskData);
+    thisTaskData.task_complete = 'y';
+    console.log(thisTaskData);
 
+    $.ajax({
+       url: '/tasks',
+       type: 'PUT',
+       data: thisTaskData,
+       success: function(response) {
+         console.log('tasks updated');
+         refreshTasks();
+       }
+    });
 
   });
 

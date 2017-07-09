@@ -11,5 +11,5 @@
 - [x] Setup add task functionality and refresh the table to show new task.
 - [x] Add buttons for 'complete' and 'delete'.
 - [x] Add classes and CSS styling so that complete items will show green.
-- [ ] Add functionality to 'complete' button so that the database is updated.
+- [x] Add functionality to 'complete' button so that the database is updated.
 - [ ]
