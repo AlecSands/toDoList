@@ -8,7 +8,7 @@
 - [x] Setup basic html and source in client side files.
 - [x] Create database, add a couple tasks to the database, and append them
         to the DOM on document ready.
-- [ ]
+- [ ] Setup add task functionality and refresh the table to show new task.
 - [ ]
 - [ ]
 - [ ]

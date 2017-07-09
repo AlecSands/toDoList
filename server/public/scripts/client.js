@@ -5,6 +5,29 @@ $('document').ready(function(){
 
   refreshTasks();
 
+  $("#newTaskForm").on("submit", function(e) {
+    e.preventDefault();
+
+    var newTask = {};
+    newTask.description = $("#newTaskDesc").val();
+    newTask.status = 'n';
+    newTask.location = $('input:radio[name=location]:checked').val().toLowerCase();
+    console.log("sending task to server: ", newTask);
+
+    $.ajax({
+      url: "/tasks",
+      type: "POST",
+      data: newTask,
+      success: function(response) {
+        console.log('ajax response: ', response);
+        refreshTasks();
+      }
+    });
+
+
+
+  });
+
 });
 
 function refreshTasks() {
