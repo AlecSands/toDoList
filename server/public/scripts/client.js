@@ -45,6 +45,8 @@ function refreshTasks() {
         $tr.append('<td>' + task.description + '</td>');
         $tr.append('<td>' + task.location + '</td>');
         $tr.append('<td>' + task.task_complete + '</td>');
+        $tr.append('<td><button type="button" class="completeBtn">complete</button></td>');
+        $tr.append('<td><button type="button" class="deleteBtn">delete</button></td>');
         $('#viewTasks').append($tr);
       }
     }

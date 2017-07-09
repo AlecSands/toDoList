@@ -8,8 +8,8 @@
 - [x] Setup basic html and source in client side files.
 - [x] Create database, add a couple tasks to the database, and append them
         to the DOM on document ready.
-- [ ] Setup add task functionality and refresh the table to show new task.
-- [ ]
-- [ ]
-- [ ]
+- [x] Setup add task functionality and refresh the table to show new task.
+- [x] Add buttons for 'complete' and 'delete'.
+- [ ] Add classes and CSS styling so that complete items will show green.
+- [ ] Add functionality to 'complete' button so that the database is updated.
 - [ ]
