@@ -12,6 +12,61 @@ var config = {
 
 var pool = new pg.Pool(config);
 
+router.get('/d3data', function(req, res){
+  pool.connect(function(errorConnectingToDatabase, db, done){
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database.');
+      res.sendStatus(500);
+    } else {
+      var queryText = 'SELECT * FROM "to_do_list" ORDER BY "description" DESC;';
+      // errorMakingQuery is a bool, result is an object
+      db.query(queryText, function(errorMakingQuery, result){
+        done();
+        if(errorMakingQuery) {
+          console.log('Attempted to query with', queryText);
+          console.log('Error making query');
+          res.sendStatus(500);
+        } else {
+          // console.log(result);
+          serverData = result.rows;
+          var d3data = {};
+          d3data.nodes = [
+            {"id": "My Locations", "group": 1},
+            {"id": "Home office", "group": 2},
+            {"id": "Kitchen", "group": 2},
+            {"id": "Bedroom", "group": 2},
+            {"id": "Coffee shop", "group": 2},
+            {"id": "School", "group": 2},
+            {"id": "Errand", "group": 2}
+          ];
+          d3data.links = [
+            {"source": "My Locations", "target": "Home office", "value": 1},
+            {"source": "My Locations", "target": "Kitchen", "value": 1},
+            {"source": "My Locations", "target": "Bedroom", "value": 1},
+            {"source": "My Locations", "target": "Coffee shop", "value": 1},
+            {"source": "My Locations", "target": "School", "value": 1},
+            {"source": "My Locations", "target": "Errand", "value": 1}
+          ];
+          for (i=0; i<serverData.length; i++) {
+            var newTaskData = serverData[i];
+            newTaskData.location = capitalizeFirstLetter(newTaskData.location);
+            var newNode = {"id": newTaskData.description, "group": 3};
+            var newLink = {"source": newTaskData.location,
+                           "target": newTaskData.description,
+                           "value": 1
+                          };
+            d3data.nodes.push(newNode);
+            d3data.links.push(newLink);
+          }
+          console.log(d3data);
+          // Send back the results
+          res.send(d3data);
+        }
+      }); // end query
+    } // end if
+  }); // end pool
+}); // end of GET
+
 router.get('/', function(req, res){
   pool.connect(function(errorConnectingToDatabase, db, done){
     if(errorConnectingToDatabase) {
@@ -130,3 +185,7 @@ router.delete('/:id', function(req, res){
 }); // end of PUT
 
 module.exports = router;
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
