@@ -100,4 +100,33 @@ router.put('/', function(req, res){
   }); // end pool
 }); // end of PUT
 
+router.delete('/:id', function(req, res){
+  var id = req.params.id;
+
+  pool.connect(function(errorConnectingToDatabase, db, done){
+    if(errorConnectingToDatabase) {
+      console.log('Error connecting to the database.');
+      res.sendStatus(500);
+    } else {
+      // We connected to the database!!!
+      // Now we're going to GET things from the db
+      var queryText = 'DELETE FROM "to_do_list"' +
+                      'WHERE "user_id" = $1;';
+      // errorMakingQuery is a bool, result is an object
+      db.query(queryText, [id], function(errorMakingQuery, result){
+        done();
+        if(errorMakingQuery) {
+          console.log('Attempted to query with', queryText);
+          console.log('Error making query');
+          res.sendStatus(500);
+        } else {
+          // console.log(result);
+          // Send back the results
+          res.sendStatus(200);
+        }
+      }); // end query
+    } // end if
+  }); // end pool
+}); // end of PUT
+
 module.exports = router;

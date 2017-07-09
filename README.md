@@ -12,4 +12,9 @@
 - [x] Add buttons for 'complete' and 'delete'.
 - [x] Add classes and CSS styling so that complete items will show green.
 - [x] Add functionality to 'complete' button so that the database is updated.
+- [x] Add functionality to 'delete' button.
 - [ ]
+- [ ]
+- [ ]
+- [ ]
+- [ ] Refactor and comment code.

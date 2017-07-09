@@ -43,6 +43,20 @@ $('document').ready(function(){
 
   });
 
+  $("#viewTasks").on('click', '.deleteBtn', function(){
+    var thisTaskData = $(this).parent().parent().data().task;
+
+    $.ajax({
+       url: '/tasks/' + thisTaskData.user_id,
+       type: 'DELETE',
+       success: function(response) {
+         console.log('tasks deleted');
+         refreshTasks();
+       }
+    });
+
+  });
+
 });
 
 function refreshTasks() {
