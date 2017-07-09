@@ -108,10 +108,11 @@ function refreshTasks() {
 
 // Creates a force directed graph (FDG) using the d3.js library
 function refreshGraph () {
+  var width = window.innerWidth;
+  var height = 400;
+
   // Selects the svg element on the DOM and stores it in a variable
-  var svg = d3.select("svg"),
-      width = 600,
-      height = 600;
+  var svg = d3.select("#canvasContainer").append("svg").attr("width", width).attr("height", height);
 
   //  Sets the color scale to be used when coloring svg elements
   var color = d3.scaleOrdinal(d3.schemeCategory20);
@@ -149,8 +150,13 @@ function refreshGraph () {
       .selectAll("circle")
       .data(graph.nodes)
       .enter().append("circle")
+        .attr("class", function(d) {return '"' + d.group + '"'; })
         .attr("r", 5)
-        .attr("fill", function(d) { return color(d.group); })
+        .attr("fill", function(d) { if (d.group == 'complete') {
+          return "#d3d3d3";
+        } if (d.group == 'notComplete') {
+          return "red";
+        } else {return color(d.group);} })
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)

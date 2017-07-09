@@ -61,7 +61,13 @@ router.get('/d3data', function(req, res){
           for (i=0; i<serverData.length; i++) {
             var newTaskData = serverData[i];
             newTaskData.location = capitalizeFirstLetter(newTaskData.location);
-            var newNode = {"id": newTaskData.description, "group": 3};
+            var groupNum;
+            if (newTaskData.task_complete == 'n') {
+              groupNum = 'notComplete';
+            } else if (newTaskData.task_complete == 'y') {
+              groupNum = 'complete';
+            }
+            var newNode = {"id": newTaskData.description, "group": groupNum};
             var newLink = {"source": newTaskData.location,
                            "target": newTaskData.description,
                            "value": 1

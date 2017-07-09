@@ -4,11 +4,11 @@ th, td{
 }
 
 .y {
-  color: green;
+  color: #d3d3d3;
 }
 
 .n {
-  color: pink;
+  color: red;
 }
 
 .links line {
@@ -18,4 +18,8 @@ th, td{
 .nodes circle {
   stroke: #fff;
   stroke-width: 1.5px;
+}
+
+.nodes circle:hover {
+  r: 10;
 }
