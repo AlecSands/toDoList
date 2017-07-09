@@ -13,8 +13,8 @@
 - [x] Add classes and CSS styling so that complete items will show green.
 - [x] Add functionality to 'complete' button so that the database is updated.
 - [x] Add functionality to 'delete' button.
-- [ ]
-- [ ]
-- [ ]
-- [ ]
+- [x] Explore d3 visualization of the tasks to complete.
+- [x] Copy over previous force directed graph and display it on the DOM.
+- [ ] Create function to convert database object to d3 object.
+- [ ] Refresh force directed graph when 'refreshTasks()' is called.
 - [ ] Refactor and comment code.
