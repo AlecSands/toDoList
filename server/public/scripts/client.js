@@ -40,7 +40,7 @@ function refreshTasks() {
       var tasks = response.tasks;
       for (i=0; i<tasks.length; i++) {
         var task = tasks[i];
-        $tr = $('<tr></tr>');
+        $tr = $('<tr class="' + task.task_complete + '"></tr>');
         $tr.data('task', task);
         $tr.append('<td>' + task.description + '</td>');
         $tr.append('<td>' + task.location + '</td>');
