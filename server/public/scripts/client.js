@@ -1,5 +1,11 @@
 console.log('javascript sourced');
 
+// Begin d3 for Force Directed Graph
+
+
+
+//End of d3 variables
+
 $('document').ready(function(){
   console.log('jquery sourced');
 
@@ -57,8 +63,33 @@ $('document').ready(function(){
 
   });
 
-  // Begin d3 for Force Directed Graph
+}); // End of document ready
 
+function refreshTasks() {
+  $('#viewTasks').empty();
+  $.ajax({
+    url: '/tasks',
+    type: 'GET',
+    success: function(response){
+      console.log(response);
+      var tasks = response.tasks;
+      for (i=0; i<tasks.length; i++) {
+        var task = tasks[i];
+        $tr = $('<tr class="' + task.task_complete + '"></tr>');
+        $tr.data('task', task);
+        $tr.append('<td>' + task.description + '</td>');
+        $tr.append('<td>' + task.location + '</td>');
+        $tr.append('<td>' + task.task_complete + '</td>');
+        $tr.append('<td><button type="button" class="completeBtn">complete</button></td>');
+        $tr.append('<td><button type="button" class="deleteBtn">delete</button></td>');
+        $('#viewTasks').append($tr);
+      }
+      refreshGraph();
+    }
+  });
+}
+
+function refreshGraph () {
   var svg = d3.select("svg"),
       width = 600,
       height = 600;
@@ -69,7 +100,8 @@ $('document').ready(function(){
       .force("link", d3.forceLink().id(function(d) { return d.id; }))
       .force("charge", d3.forceManyBody().strength(-250))
       .force("center", d3.forceCenter(width / 2, height / 2));
-
+      
+  $('#canvas').empty();
   d3.json('tasks/d3data', function(error, graph) {
     console.log(graph);
     if (error) throw error;
@@ -115,47 +147,21 @@ $('document').ready(function(){
           .attr("cy", function(d) { return d.y; });
     }
   });
+}
 
-  function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-  }
+function dragstarted(d) {
+  if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+  d.fx = d.x;
+  d.fy = d.y;
+}
 
-  function dragged(d) {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
-  }
+function dragged(d) {
+  d.fx = d3.event.x;
+  d.fy = d3.event.y;
+}
 
-  function dragended(d) {
-    if (!d3.event.active) simulation.alphaTarget(0);
-    d.fx = null;
-    d.fy = null;
-  }
-
-  //End of d3
-
-}); // End of document ready
-
-function refreshTasks() {
-  $('#viewTasks').empty();
-  $.ajax({
-    url: '/tasks',
-    type: 'GET',
-    success: function(response){
-      console.log(response);
-      var tasks = response.tasks;
-      for (i=0; i<tasks.length; i++) {
-        var task = tasks[i];
-        $tr = $('<tr class="' + task.task_complete + '"></tr>');
-        $tr.data('task', task);
-        $tr.append('<td>' + task.description + '</td>');
-        $tr.append('<td>' + task.location + '</td>');
-        $tr.append('<td>' + task.task_complete + '</td>');
-        $tr.append('<td><button type="button" class="completeBtn">complete</button></td>');
-        $tr.append('<td><button type="button" class="deleteBtn">delete</button></td>');
-        $('#viewTasks').append($tr);
-      }
-    }
-  });
+function dragended(d) {
+  if (!d3.event.active) simulation.alphaTarget(0);
+  d.fx = null;
+  d.fy = null;
 }
