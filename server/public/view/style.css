@@ -12,9 +12,10 @@ th, td{
 }
 
 .links line {
-  stroke: #999;
+  stroke: #d1d1d1;
   stroke-opacity: 0.6;
 }
+
 .nodes circle {
   stroke: #fff;
   stroke-width: 1.5px;

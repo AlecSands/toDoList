@@ -18,4 +18,5 @@
 - [x] Create function to convert database object to d3 object.
 - [x] Refresh force directed graph when 'refreshTasks()' is called.
 - [x] Refactor and comment code.
-- [ ] Match colors on graph to colors in list.
+- [x] Match colors on graph to colors in list.
+- [x] Add text to graph.

@@ -111,6 +111,9 @@ function refreshGraph () {
   var width = window.innerWidth;
   var height = 400;
 
+  // Clears all elements nested in the svg element
+  $('#canvasContainer').empty();
+
   // Selects the svg element on the DOM and stores it in a variable
   var svg = d3.select("#canvasContainer").append("svg").attr("width", width).attr("height", height);
 
@@ -125,9 +128,6 @@ function refreshGraph () {
       .force("charge", d3.forceManyBody().strength(-250))
       // Sets the center of gravity for the graph
       .force("center", d3.forceCenter(width / 2, height / 2));
-
-  // Clears all elements nested in the svg element
-  $('#canvas').empty();
 
   // This function calls the server with a GET request and returns an object into
   // the graph parameter
@@ -150,8 +150,11 @@ function refreshGraph () {
       .selectAll("circle")
       .data(graph.nodes)
       .enter().append("circle")
+        // Adds a class to each node
         .attr("class", function(d) {return '"' + d.group + '"'; })
+        // Sets the radius of each node
         .attr("r", 5)
+        // Sets the color of each node based on its group
         .attr("fill", function(d) { if (d.group == 'complete') {
           return "#d3d3d3";
         } if (d.group == 'notComplete') {
