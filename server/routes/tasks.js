@@ -1,27 +1,15 @@
 // Sets up all the basic required libraries for the tasks route
 var express = require('express');
 var router = express.Router();
-var pg = require('pg');
 
-// Create a javascript object which will be used to connect to the server
-var config = {
-  database: 'antares',
-  host: 'localhost',
-  // This is different because of some screwy stuff that happened with my installation.
-  port: 5433,
-  // Define the max number of connections in the pool
-  max: 10,
-  idleTimeoutMillis: 3000
-};
-
-// Sets up the pg pool for connecting the database
-var pool = new pg.Pool(config);
+var poolModule = require('./modules/pool.js');
+var pool = poolModule;
 
 // This route responds to the d3 data request from the client
 router.get('/d3data', function(req, res){
   pool.connect(function(errorConnectingToDatabase, db, done){
     if(errorConnectingToDatabase) {
-      console.log('Error connecting to the database.');
+      console.log('Error connecting to the database.', errorConnectingToDatabase);
       res.sendStatus(500);
     } else {
       var queryText = 'SELECT * FROM "to_do_list" ORDER BY "description" DESC;';
@@ -29,7 +17,7 @@ router.get('/d3data', function(req, res){
         done();
         if(errorMakingQuery) {
           console.log('Attempted to query with', queryText);
-          console.log('Error making query');
+          console.log('Error making query', errorMakingQuery);
           res.sendStatus(500);
         } else {
           // Store the data from the database in a variable
@@ -88,7 +76,7 @@ router.get('/d3data', function(req, res){
 router.get('/', function(req, res){
   pool.connect(function(errorConnectingToDatabase, db, done){
     if(errorConnectingToDatabase) {
-      console.log('Error connecting to the database.');
+      console.log('Error connecting to the database.', errorConnectingToDatabase);
       res.sendStatus(500);
     } else {
       var queryText = 'SELECT * FROM "to_do_list" ORDER BY "description" DESC;';
@@ -96,7 +84,7 @@ router.get('/', function(req, res){
         done();
         if(errorMakingQuery) {
           console.log('Attempted to query with', queryText);
-          console.log('Error making query');
+          console.log('Error making query', errorMakingQuery);
           res.sendStatus(500);
         } else {
           // Send back the results
@@ -113,7 +101,7 @@ router.post('/', function(req, res) {
   var newTask = req.body;
   pool.connect(function(errorConnectingToDatabase, db, done){
     if(errorConnectingToDatabase) {
-      console.log('Error connecting to the database.');
+      console.log('Error connecting to the database.', errorConnectingToDatabase);
       res.sendStatus(500);
     } else {
       // Create a string which is a SQL query that will be passed to postresql.
@@ -143,7 +131,7 @@ router.put('/', function(req, res){
   console.log('Put route called with task of ', updateTask);
   pool.connect(function(errorConnectingToDatabase, db, done){
     if(errorConnectingToDatabase) {
-      console.log('Error connecting to the database.');
+      console.log('Error connecting to the database.', errorConnectingToDatabase);
       res.sendStatus(500);
     } else {
       console.log(updateTask);
@@ -153,7 +141,7 @@ router.put('/', function(req, res){
         done();
         if(errorMakingQuery) {
           console.log('Attempted to query with', queryText);
-          console.log('Error making query');
+          console.log('Error making query', errorMakingQuery);
           res.sendStatus(500);
         } else {
           // Send back status of success
@@ -170,7 +158,7 @@ router.delete('/:id', function(req, res){
   var id = req.params.id;
   pool.connect(function(errorConnectingToDatabase, db, done){
     if(errorConnectingToDatabase) {
-      console.log('Error connecting to the database.');
+      console.log('Error connecting to the database.', errorConnectingToDatabase);
       res.sendStatus(500);
     } else {
       var queryText = 'DELETE FROM "to_do_list"' +
@@ -179,7 +167,7 @@ router.delete('/:id', function(req, res){
         done();
         if(errorMakingQuery) {
           console.log('Attempted to query with', queryText);
-          console.log('Error making query');
+          console.log('Error making query', errorMakingQuery);
           res.sendStatus(500);
         } else {
           // Send back status of success
